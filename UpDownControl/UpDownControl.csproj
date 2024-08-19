@@ -25,8 +25,11 @@
 
     <ItemGroup>
       <None Remove="Icons\chevron_left.svg" />
-      <MauiImage Include="Icons\chevron_left.svg" />
       <None Remove="Icons\chevron_right.svg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiImage Include="Icons\chevron_left.svg" />
       <MauiImage Include="Icons\chevron_right.svg" />
     </ItemGroup>
 
