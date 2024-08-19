@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UpDownControl.UI.UpDown">
+        <Grid Padding="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+        
+            <ImageButton Grid.Column="0" x:Name="DownButton" Source="chevron_left" BackgroundColor="Blue" CornerRadius="4"></ImageButton>
+            <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="1" x:Name="ValueLabel" BackgroundColor="Red"/>
+            <ImageButton Grid.Column="2" x:Name="UpButton" Source="chevron_right" BackgroundColor="Blue" CornerRadius="4"></ImageButton>
+        </Grid>
+</ContentView>
