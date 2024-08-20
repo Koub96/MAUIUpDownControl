@@ -72,23 +72,45 @@ public partial class UpDown : ContentView
 
         switch ((ControlOrientation)newValue)
         {
-           case ControlOrientation.Horizontal : 
+           case ControlOrientation.Horizontal :
+               control.GridLayout.RowDefinitions.Clear();
+               control.GridLayout.ColumnDefinitions.Clear();
+
+               control.GridLayout.ColumnDefinitions.Add(new ColumnDefinition(50));
+               control.GridLayout.ColumnDefinitions.Add(new ColumnDefinition(100));
+               control.GridLayout.ColumnDefinitions.Add(new ColumnDefinition(50));
+               control.GridLayout.RowDefinitions.Add(new RowDefinition(100));
+
+               Grid.SetColumn(control.DownButton, 0);
+               Grid.SetColumn(control.ValueLabel, 1);
+               Grid.SetColumn(control.UpButton, 2);
                break;
            case ControlOrientation.Vertical : 
+               control.GridLayout.RowDefinitions.Clear();
+               control.GridLayout.ColumnDefinitions.Clear();
+
+               control.GridLayout.ColumnDefinitions.Add(new ColumnDefinition(100));
+               control.GridLayout.RowDefinitions.Add(new RowDefinition(50));
+               control.GridLayout.RowDefinitions.Add(new RowDefinition(100));
+               control.GridLayout.RowDefinitions.Add(new RowDefinition(50));
+
+               Grid.SetRow(control.UpButton, 0);
+               Grid.SetRow(control.ValueLabel, 1);
+               Grid.SetRow(control.DownButton, 2);
                break;
         }
     }
-    public static readonly BindableProperty LeftImageProperty =
-        BindableProperty.Create(nameof(LeftImage), typeof(ImageSource), typeof(UpDown), null, propertyChanged: LeftImageChanged);
-    private static void LeftImageChanged (BindableObject bindable, object oldValue, object newValue)
+    public static readonly BindableProperty DownButtonImageProperty =
+        BindableProperty.Create(nameof(DownButtonImage), typeof(ImageSource), typeof(UpDown), null, propertyChanged: DownButtonImageChanged);
+    private static void DownButtonImageChanged (BindableObject bindable, object oldValue, object newValue)
     {
         var control = bindable as UpDown;
 
         control.DownButton.Source = (ImageSource)newValue;
     }
-    public static readonly BindableProperty RightImageProperty =
-        BindableProperty.Create(nameof(LeftImage), typeof(ImageSource), typeof(UpDown), null, propertyChanged: RightImageChanged);
-    private static void RightImageChanged (BindableObject bindable, object oldValue, object newValue)
+    public static readonly BindableProperty UpButtonImageProperty =
+        BindableProperty.Create(nameof(UpButtonImage), typeof(ImageSource), typeof(UpDown), null, propertyChanged: UpButtonImageChanged);
+    private static void UpButtonImageChanged (BindableObject bindable, object oldValue, object newValue)
     {
         var control = bindable as UpDown;
 
@@ -130,17 +152,21 @@ public partial class UpDown : ContentView
         get => (ControlOrientation)GetValue(OrientationProperty);
         set => SetValue(OrientationProperty, value);
     }
-    public ImageSource LeftImage
+    public ImageSource DownButtonImage
     {
-        get => (ImageSource)GetValue(LeftImageProperty);
-        set => SetValue(LeftImageProperty, value);
+        get => (ImageSource)GetValue(DownButtonImageProperty);
+        set => SetValue(DownButtonImageProperty, value);
+    }public ImageSource UpButtonImage
+    {
+        get => (ImageSource)GetValue(UpButtonImageProperty);
+        set => SetValue(UpButtonImageProperty, value);
     }
     #endregion
-    
+
     public UpDown()
     {
         InitializeComponent();
-        
+
         this.UpButton.Clicked += UpButtonOnClicked;
         this.DownButton.Clicked += DownButtonOnClicked;
     }

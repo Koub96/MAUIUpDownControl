@@ -18,6 +18,9 @@ public partial class MainPage : ContentPage
         e.ToString();
         
         this.UpDownControl.Culture = new CultureInfo("en-US");
-        this.UpDownControl.Orientation = ControlOrientation.Vertical;
+        if(this.UpDownControl.Orientation == ControlOrientation.Horizontal)
+            this.UpDownControl.Orientation = ControlOrientation.Vertical;
+        else
+            this.UpDownControl.Orientation = ControlOrientation.Horizontal;
     }
 }
