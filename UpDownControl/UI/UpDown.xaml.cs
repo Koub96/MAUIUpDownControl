@@ -62,7 +62,7 @@ public partial class UpDown : ContentView
             throw new Exception("Cannot enforce a lower limit when the current value has already exceeded it.");
     }
     public static readonly BindableProperty OrientationProperty =
-        BindableProperty.Create(nameof(Step), typeof(ControlOrientation), typeof(UpDown), ControlOrientation.Horizontal, propertyChanged: OnOrientationChanged);
+        BindableProperty.Create(nameof(Orientation), typeof(ControlOrientation), typeof(UpDown), ControlOrientation.Horizontal, propertyChanged: OnOrientationChanged);
     private static void OnOrientationChanged (BindableObject bindable, object oldValue, object newValue)
     {
         var control = bindable as UpDown;
@@ -77,6 +77,22 @@ public partial class UpDown : ContentView
            case ControlOrientation.Vertical : 
                break;
         }
+    }
+    public static readonly BindableProperty LeftImageProperty =
+        BindableProperty.Create(nameof(LeftImage), typeof(ImageSource), typeof(UpDown), null, propertyChanged: LeftImageChanged);
+    private static void LeftImageChanged (BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = bindable as UpDown;
+
+        control.DownButton.Source = (ImageSource)newValue;
+    }
+    public static readonly BindableProperty RightImageProperty =
+        BindableProperty.Create(nameof(LeftImage), typeof(ImageSource), typeof(UpDown), null, propertyChanged: RightImageChanged);
+    private static void RightImageChanged (BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = bindable as UpDown;
+
+        control.UpButton.Source = (ImageSource)newValue;
     }
     #endregion
     
@@ -113,6 +129,11 @@ public partial class UpDown : ContentView
     {
         get => (ControlOrientation)GetValue(OrientationProperty);
         set => SetValue(OrientationProperty, value);
+    }
+    public ImageSource LeftImage
+    {
+        get => (ImageSource)GetValue(LeftImageProperty);
+        set => SetValue(LeftImageProperty, value);
     }
     #endregion
     

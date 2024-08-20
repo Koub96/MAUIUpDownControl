@@ -8,7 +8,7 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-            <ui:UpDown x:Name="UpDownControl" InitialValue="4" Step="0.44"></ui:UpDown>
+            <ui:UpDown x:Name="UpDownControl" InitialValue="4" Step="0.44" LeftImage="dotnet_bot.png"></ui:UpDown>
         </VerticalStackLayout>
     </ScrollView>
 
