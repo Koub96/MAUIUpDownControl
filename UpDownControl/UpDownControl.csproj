@@ -21,7 +21,7 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)"/>
         <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)"/>
-        <PackageReference Include="Microsoft.Maui.Graphics" Version="8.0.40" />
+        <PackageReference Include="Microsoft.Maui.Graphics" Version="$(MauiVersion)" />
     </ItemGroup>
 
     <ItemGroup>
