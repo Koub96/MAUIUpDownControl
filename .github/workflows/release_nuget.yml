@@ -1,29 +1,23 @@
-name: Create a (Pre)release on NuGet
+name: Release to NuGet
 
 on:
-  push:
-    tags:
-    - "v[0-9]+.[0-9]+.[0-9]+"
-    - "v[0-9]+.[0-9]+.[0-9]+-preview[0-9]+"
+  release:
+    types: [published]
+    
 jobs:
-  release-nuget:
-  
+  build:
     runs-on: windows-latest
-
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - name: Verify commit exists in origin/master
-        run: |
-          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
-          git branch --remote --contains | grep origin/master
-      - name: Get version information from tag
-        id: get_version
-        run: |
-          $version="${{github.ref_name}}".TrimStart("v")
-          "version-without-v=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
-      - name: Pack
-        run: dotnet pack UpDownMaui.sln -c Release -p:PackageVersion=${{ steps.get_version.outputs.version-without-v }}
-      - name: Push
-        run: dotnet nuget push UpDownMaui\bin\Release\UpDownMaui.${{ steps.get_version.outputs.version-without-v }}.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGETAPIKEY }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.NUGETAPIKEY }}
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v1
+    - name: Build
+      run: dotnet build -c Release
+    - name: Test
+      run: dotnet test -c Release --no-build
+    - name: Pack nugets
+      run: dotnet pack -c Release --no-build --output .
+    - name: Push to NuGet
+      run: dotnet nuget push "*.nupkg" --api-key ${{secrets.NUGETAPIKEY}} --source https://api.nuget.org/v3/index.json
