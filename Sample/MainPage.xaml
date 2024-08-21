@@ -5,12 +5,12 @@
              x:Class="Sample.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout
-            Margin="200"
+        <HorizontalStackLayout
+            Margin="0"
             Padding="30,0"
-            Spacing="25">
-            <ui:UpDown x:Name="UpDownControl" FontSize="30" TextColor="Red" BackgroundColor="Blue" CornerRadius="6" BorderColor="Red" InitialValue="4" Step="0.44" DownButtonImage="dotnet_bot.png" WidthRequest="85" HeightRequest="30"></ui:UpDown>
-        </VerticalStackLayout>
+            Spacing="0">
+            <ui:UpDown x:Name="UpDownControl" FontSize="30" TextColor="Red" BackgroundColor="Blue" CornerRadius="6" BorderColor="Red" InitialValue="4" Step="0.44" DownButtonImage="dotnet_bot.png" WidthRequest="113" HeightRequest="41"></ui:UpDown>
+        </HorizontalStackLayout>
     </ScrollView>
 
 </ContentPage>
