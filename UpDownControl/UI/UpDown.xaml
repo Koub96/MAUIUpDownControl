@@ -3,20 +3,20 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="UpDownControl.UI.UpDown">
-    <Frame Padding="1" CornerRadius="6" BorderColor="Black">
+    <Frame x:Name="FrameLayout" Padding="0" CornerRadius="2" BorderColor="Black">
         <Grid Padding="0" HorizontalOptions="Center" x:Name="GridLayout">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50"></ColumnDefinition>
-                <ColumnDefinition Width="100"></ColumnDefinition>
-                <ColumnDefinition Width="50"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
         
-            <ImageButton Grid.Column="0" x:Name="DownButton" Source="chevron_left" BackgroundColor="White" CornerRadius="4"></ImageButton>
-            <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Grid.Column="1" x:Name="ValueLabel"/>
-            <ImageButton Grid.Column="2" x:Name="UpButton" Source="chevron_right" BackgroundColor="White" CornerRadius="4"></ImageButton>
+            <ImageButton Grid.Column="0" x:Name="DownButton" Source="chevron_left" BackgroundColor="White"></ImageButton>
+            <Label Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" x:Name="ValueLabel"/>
+            <ImageButton Grid.Column="2" x:Name="UpButton" Source="chevron_right" BackgroundColor="White"></ImageButton>
         </Grid>
     </Frame>
 </ContentView>

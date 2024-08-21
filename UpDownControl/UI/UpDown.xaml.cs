@@ -61,45 +61,54 @@ public partial class UpDown : ContentView
         if (currentValue < (decimal)newValue)
             throw new Exception("Cannot enforce a lower limit when the current value has already exceeded it.");
     }
-    public static readonly BindableProperty OrientationProperty =
-        BindableProperty.Create(nameof(Orientation), typeof(ControlOrientation), typeof(UpDown), ControlOrientation.Horizontal, propertyChanged: OnOrientationChanged);
-    private static void OnOrientationChanged (BindableObject bindable, object oldValue, object newValue)
-    {
-        var control = bindable as UpDown;
-
-        if ((ControlOrientation)oldValue == (ControlOrientation)newValue)
-            return;
-
-        switch ((ControlOrientation)newValue)
-        {
-           case ControlOrientation.Horizontal :
-               control.GridLayout.RowDefinitions.Clear();
-               control.GridLayout.ColumnDefinitions.Clear();
-
-               control.GridLayout.ColumnDefinitions.Add(new ColumnDefinition(50));
-               control.GridLayout.ColumnDefinitions.Add(new ColumnDefinition(100));
-               control.GridLayout.ColumnDefinitions.Add(new ColumnDefinition(50));
-               control.GridLayout.RowDefinitions.Add(new RowDefinition(100));
-
-               Grid.SetColumn(control.DownButton, 0);
-               Grid.SetColumn(control.ValueLabel, 1);
-               Grid.SetColumn(control.UpButton, 2);
-               break;
-           case ControlOrientation.Vertical : 
-               control.GridLayout.RowDefinitions.Clear();
-               control.GridLayout.ColumnDefinitions.Clear();
-
-               control.GridLayout.ColumnDefinitions.Add(new ColumnDefinition(100));
-               control.GridLayout.RowDefinitions.Add(new RowDefinition(50));
-               control.GridLayout.RowDefinitions.Add(new RowDefinition(100));
-               control.GridLayout.RowDefinitions.Add(new RowDefinition(50));
-
-               Grid.SetRow(control.UpButton, 0);
-               Grid.SetRow(control.ValueLabel, 1);
-               Grid.SetRow(control.DownButton, 2);
-               break;
-        }
-    }
+    // public static readonly BindableProperty OrientationProperty =
+    //     BindableProperty.Create(nameof(Orientation), typeof(ControlOrientation), typeof(UpDown), ControlOrientation.Horizontal, propertyChanged: OnOrientationChanged);
+    // private static void OnOrientationChanged (BindableObject bindable, object oldValue, object newValue)
+    // {
+    //     var control = bindable as UpDown;
+    //
+    //     if ((ControlOrientation)oldValue == (ControlOrientation)newValue)
+    //         return;
+    //
+    //     switch ((ControlOrientation)newValue)
+    //     {
+    //        case ControlOrientation.Horizontal :
+    //            // control.GridLayout.RowDefinitions.Clear();
+    //            // control.GridLayout.ColumnDefinitions.Clear();
+    //            //
+    //            // control.GridLayout.ColumnDefinitions.Add(new ColumnDefinition(50));
+    //            // control.GridLayout.ColumnDefinitions.Add(new ColumnDefinition(100));
+    //            // control.GridLayout.ColumnDefinitions.Add(new ColumnDefinition(50));
+    //            // control.GridLayout.RowDefinitions.Add(new RowDefinition(100));
+    //            //
+    //            // Grid.SetColumn(control.DownButton, 0);
+    //            // Grid.SetColumn(control.ValueLabel, 1);
+    //            // Grid.SetColumn(control.UpButton, 2);
+    //            break;
+    //        case ControlOrientation.Vertical : 
+    //            // control.GridLayout.RowDefinitions.Clear();
+    //            // control.GridLayout.ColumnDefinitions.Clear();
+    //            //
+    //            // control.GridLayout.ColumnDefinitions.Add(new ColumnDefinition(100));
+    //            // control.GridLayout.RowDefinitions.Add(new RowDefinition(50));
+    //            // control.GridLayout.RowDefinitions.Add(new RowDefinition(100));
+    //            // control.GridLayout.RowDefinitions.Add(new RowDefinition(50));
+    //            //
+    //            // control.GridLayout.ColumnDefinitions[0].Width = control.HeightRequest;
+    //            // control.GridLayout.RowDefinitions[0].Height = control.WidthRequest * 0.24;
+    //            // control.GridLayout.RowDefinitions[1].Height = control.WidthRequest * 0.52;
+    //            // control.GridLayout.RowDefinitions[2].Height = control.WidthRequest * 0.24;
+    //            //
+    //            // Grid.SetRow(control.UpButton, 0);
+    //            // Grid.SetRow(control.ValueLabel, 1);
+    //            // Grid.SetRow(control.DownButton, 2);
+    //            //
+    //            // control.FrameLayout.WidthRequest = control.HeightRequest;
+    //            // control.FrameLayout.HeightRequest = control.WidthRequest;
+    //            control.RotateTo(90);
+    //            break;
+    //     }
+    // }
     public static readonly BindableProperty DownButtonImageProperty =
         BindableProperty.Create(nameof(DownButtonImage), typeof(ImageSource), typeof(UpDown), null, propertyChanged: DownButtonImageChanged);
     private static void DownButtonImageChanged (BindableObject bindable, object oldValue, object newValue)
@@ -115,6 +124,49 @@ public partial class UpDown : ContentView
         var control = bindable as UpDown;
 
         control.UpButton.Source = (ImageSource)newValue;
+    } 
+    public static readonly BindableProperty BorderColorProperty =
+        BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(UpDown), Colors.Black, propertyChanged: BorderColorChanged);
+    private static void BorderColorChanged (BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = bindable as UpDown;
+
+        control.FrameLayout.BorderColor = newValue as Color;
+    }
+    public static readonly BindableProperty CornerRadiusProperty =
+        BindableProperty.Create(nameof(CornerRadius), typeof(int), typeof(UpDown), 0, propertyChanged: CornerRadiusChanged);
+    private static void CornerRadiusChanged (BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = bindable as UpDown;
+
+        control.FrameLayout.CornerRadius = Convert.ToInt64(newValue);
+    }
+    public static readonly BindableProperty BackgroundColorProperty =
+        BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(UpDown), Colors.White, propertyChanged: BackgroundColorChanged);
+    private static void BackgroundColorChanged (BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = bindable as UpDown;
+
+        control.FrameLayout.BackgroundColor = newValue as Color;
+        control.GridLayout.BackgroundColor = newValue as Color;
+        control.UpButton.BackgroundColor = newValue as Color;
+        control.DownButton.BackgroundColor = newValue as Color;
+    }
+    public static readonly BindableProperty TextColorProperty =
+        BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(UpDown), Colors.Black, propertyChanged: TextColorChanged);
+    private static void TextColorChanged (BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = bindable as UpDown;
+
+        control.ValueLabel.TextColor = newValue as Color;
+    }
+    public static readonly BindableProperty FontSizeProperty =
+        BindableProperty.Create(nameof(FontSize), typeof(double), typeof(UpDown), (double)8, propertyChanged: FontSizeChanged);
+    private static void FontSizeChanged (BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = bindable as UpDown;
+
+        control.ValueLabel.FontSize = (double)newValue;
     }
     #endregion
     
@@ -147,19 +199,46 @@ public partial class UpDown : ContentView
         get => (decimal?)GetValue(LowerLimitProperty);
         set => SetValue(LowerLimitProperty, value);
     }
-    public ControlOrientation Orientation
-    {
-        get => (ControlOrientation)GetValue(OrientationProperty);
-        set => SetValue(OrientationProperty, value);
-    }
+    // public ControlOrientation Orientation
+    // {
+    //     get => (ControlOrientation)GetValue(OrientationProperty);
+    //     set => SetValue(OrientationProperty, value);
+    // }
     public ImageSource DownButtonImage
     {
         get => (ImageSource)GetValue(DownButtonImageProperty);
         set => SetValue(DownButtonImageProperty, value);
-    }public ImageSource UpButtonImage
+    }
+    public ImageSource UpButtonImage
     {
         get => (ImageSource)GetValue(UpButtonImageProperty);
         set => SetValue(UpButtonImageProperty, value);
+    }
+    public Color BorderColor
+    {
+        get => (Color)GetValue(BorderColorProperty);
+        set => SetValue(BorderColorProperty, value);
+    }
+    public int CornerRadius
+    {
+        get => (int)GetValue(CornerRadiusProperty);
+        set => SetValue(CornerRadiusProperty, value);
+    }
+    //Intentional hiding of the Visual Element property.
+    public Color BackgroundColor
+    {
+        get => (Color)GetValue(BackgroundColorProperty);
+        set => SetValue(BackgroundColorProperty, value);
+    }
+    public Color TextColor
+    {
+        get => (Color)GetValue(TextColorProperty);
+        set => SetValue(TextColorProperty, value);
+    }
+    public double FontSize
+    {
+        get => (double)GetValue(FontSizeProperty);
+        set => SetValue(FontSizeProperty, value);
     }
     #endregion
 
@@ -169,6 +248,8 @@ public partial class UpDown : ContentView
 
         this.UpButton.Clicked += UpButtonOnClicked;
         this.DownButton.Clicked += DownButtonOnClicked;
+
+        this.BackgroundColor = Colors.Transparent;
     }
 
     #region Events
@@ -219,4 +300,33 @@ public partial class UpDown : ContentView
         }
     }
     #endregion
+
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        base.OnSizeAllocated(width, height);
+
+        if (width < 0 || height < 0)
+            return;
+
+        if (FrameLayout == null)
+            return;
+        
+        FrameLayout.WidthRequest = width;
+        FrameLayout.HeightRequest = height;
+
+        //if (this.Orientation == ControlOrientation.Horizontal)
+        //{
+            this.GridLayout.RowDefinitions[0].Height = height;;
+            this.GridLayout.ColumnDefinitions[0].Width = width * 0.24;
+            this.GridLayout.ColumnDefinitions[1].Width = width * 0.52;
+            this.GridLayout.ColumnDefinitions[2].Width = width * 0.24;
+        //}
+        // else
+        // {
+        //     this.GridLayout.ColumnDefinitions[0].Width = width;
+        //     this.GridLayout.RowDefinitions[0].Height = height * 0.24;
+        //     this.GridLayout.RowDefinitions[1].Height = height * 0.52;
+        //     this.GridLayout.RowDefinitions[2].Height = height * 0.24;
+        // }
+    }
 }
