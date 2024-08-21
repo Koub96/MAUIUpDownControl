@@ -26,7 +26,7 @@ Install with the dotnet CLI: `dotnet add package Plugin.Maui.UpDownControl`, or 
 
 Set the `InitialValue` property in order to set the initial value from which the control will start to increment/decrement based on the `Step` property.
 You can also set the `Culture` property in order to achieve localization regarding the form of the decimal and group separators etc.
-Finally, you can set the `UpperLimit` and `LowerLimit` properties to customize the behavior of the control based on your needs.
+Finally, you can set the `UpperLimit` and `LowerLimit` properties to further customize the behavior of the control based on your needs.
 
 In case the upper or lower limit is reached, you will be notified via the corresponding event handlers `UpperLimitReached` and `LowerLimitReached`.
 You will be notified for each value change via the `ValueChanged` event handler.
