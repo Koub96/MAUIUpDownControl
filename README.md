@@ -22,7 +22,7 @@ Install with the dotnet CLI: `dotnet add package Plugin.Maui.UpDownControl`, or 
 
 ## API Usage
 
-`Plugin.Maui.UpDownControl` provides the `UpDown` class that has varuous properties that you can set in order to customize the UI of the control and/or customize its functionallity.
+`Plugin.Maui.UpDownControl` provides the `UpDown` class that has various properties that you can set in order to customize the UI of the control and/or customize its functionallity.
 
 Set the `InitialValue` property in order to set the initial value from which the control will start to increment/decrement based on the `Step` property.
 You can also set the `Culture` property in order to achieve localization regarding the form of the decimal and group separators etc.
