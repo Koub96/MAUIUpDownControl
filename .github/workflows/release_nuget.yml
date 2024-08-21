@@ -22,8 +22,8 @@ jobs:
           $version="${{github.ref_name}}".TrimStart("v")
           "version-without-v=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
       - name: Pack
-        run: dotnet pack src\UpDownMaui.sln -c Release -p:PackageVersion=${{ steps.get_version.outputs.version-without-v }}
+        run: dotnet pack UpDownMaui.sln -c Release -p:PackageVersion=${{ steps.get_version.outputs.version-without-v }}
       - name: Push
-        run: dotnet nuget push src\UpDownMaui\bin\Release\UpDownMaui.${{ steps.get_version.outputs.version-without-v }}.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGETAPIKEY }}
+        run: dotnet nuget push UpDownMaui\bin\Release\UpDownMaui.${{ steps.get_version.outputs.version-without-v }}.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGETAPIKEY }}
         env:
           GITHUB_TOKEN: ${{ secrets.NUGETAPIKEY }}
