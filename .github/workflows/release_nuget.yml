@@ -24,6 +24,6 @@ jobs:
       - name: Pack
         run: dotnet pack UpDownMaui.sln -c Release -p:PackageVersion=${{ steps.get_version.outputs.version-without-v }}
       - name: Push
-        run: dotnet nuget push UpDownControl\bin\Release\UpDownMaui.${{ steps.get_version.outputs.version-without-v }}.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGETAPIKEY }}
+        run: dotnet nuget push MAUIUpDownControl\UpDownControl\bin\Release\UpDownMaui.${{ steps.get_version.outputs.version-without-v }}.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGETAPIKEY }}
         env:
           GITHUB_TOKEN: ${{ secrets.NUGETAPIKEY }}
