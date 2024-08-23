@@ -14,7 +14,7 @@ public partial class UpDown : ContentView
 {
     #region Bindable Properties
     public static readonly BindableProperty CultureProperty =
-        BindableProperty.Create(nameof(Step), typeof(CultureInfo), typeof(UpDown), CultureInfo.CurrentCulture, propertyChanged: OnCultureChanged);
+        BindableProperty.Create(nameof(Culture), typeof(CultureInfo), typeof(UpDown), CultureInfo.CurrentCulture, propertyChanged: OnCultureChanged);
     private static void OnCultureChanged (BindableObject bindable, object oldValue, object newValue)
     {
         var control = bindable as UpDown;
@@ -32,17 +32,15 @@ public partial class UpDown : ContentView
     {
     }
     public static readonly BindableProperty InitialValueProperty =
-        BindableProperty.Create(nameof(Step), typeof(decimal), typeof(UpDown), Convert.ToDecimal(0), propertyChanged: OnInitialValueChanged);
+        BindableProperty.Create(nameof(InitialValue), typeof(decimal), typeof(UpDown), Convert.ToDecimal(0), propertyChanged: OnInitialValueChanged);
     private static void OnInitialValueChanged (BindableObject bindable, object oldValue, object newValue)
     {
         UpDown control = bindable as UpDown;
-        if (!string.IsNullOrEmpty(control.ValueLabel.Text))
-            return;
 
-        control.ValueLabel.Text = ((decimal)newValue).ToString(CultureInfo.CurrentCulture);
+        control.ValueLabel.Text = ((decimal)newValue).ToString(control.Culture);
     }
     public static readonly BindableProperty UpperLimitProperty =
-        BindableProperty.Create(nameof(Step), typeof(decimal?), typeof(UpDown), null, propertyChanged: OnUpperLimitChanged);
+        BindableProperty.Create(nameof(UpperLimit), typeof(decimal?), typeof(UpDown), null, propertyChanged: OnUpperLimitChanged);
     private static void OnUpperLimitChanged (BindableObject bindable, object oldValue, object newValue)
     {
         var control = bindable as UpDown;
@@ -52,7 +50,7 @@ public partial class UpDown : ContentView
             throw new Exception("Cannot enforce an upper limit when the current value has already exceeded it.");
     }
     public static readonly BindableProperty LowerLimitProperty =
-        BindableProperty.Create(nameof(Step), typeof(decimal?), typeof(UpDown), null, propertyChanged: OnLowerLimitChanged);
+        BindableProperty.Create(nameof(LowerLimit), typeof(decimal?), typeof(UpDown), null, propertyChanged: OnLowerLimitChanged);
     private static void OnLowerLimitChanged (BindableObject bindable, object oldValue, object newValue)
     {
         var control = bindable as UpDown;
@@ -250,6 +248,9 @@ public partial class UpDown : ContentView
         this.DownButton.Clicked += DownButtonOnClicked;
 
         this.BackgroundColor = Colors.Transparent;
+        
+        if(string.IsNullOrEmpty(ValueLabel.Text))
+            ValueLabel.Text = ((decimal)0).ToString(Culture);
     }
 
     #region Events

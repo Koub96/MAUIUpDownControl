@@ -14,9 +14,9 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
         
-            <ImageButton Grid.Column="0" x:Name="DownButton" Source="chevron_left" BackgroundColor="White"></ImageButton>
+            <ImageButton Grid.Column="0" x:Name="DownButton" Source="chevron_left" BackgroundColor="Gray"></ImageButton>
             <Label Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" x:Name="ValueLabel"/>
-            <ImageButton Grid.Column="2" x:Name="UpButton" Source="chevron_right" BackgroundColor="White"></ImageButton>
+            <ImageButton Grid.Column="2" x:Name="UpButton" Source="chevron_right" BackgroundColor="Gray"></ImageButton>
         </Grid>
     </Frame>
 </ContentView>
