@@ -24,7 +24,17 @@ public partial class UpDown : ContentView
         CultureInfo oldCulture = oldValue as CultureInfo;
         CultureInfo newCulture = newValue as CultureInfo;
 
-        control.ValueLabel.Text = Convert.ToDecimal(control.ValueLabel.Text, oldCulture).ToString(newCulture);
+        control.ValueLabel.Text = decimal.Parse(control.ValueLabel.Text, NumberStyles.Any, oldCulture).ToString(control.Format, newCulture);
+    }
+    public static readonly BindableProperty FormatProperty =
+        BindableProperty.Create(nameof(Format), typeof(string), typeof(UpDown), "", propertyChanged: OnFormatChanged);
+    private static void OnFormatChanged (BindableObject bindable, object oldValue, object newValue)
+    {
+        var control = bindable as UpDown;
+        
+        var formattedValue = decimal.Parse(control.ValueLabel.Text, NumberStyles.Any, control.Culture).ToString((string)newValue, control.Culture);
+
+        control.ValueLabel.Text = formattedValue;
     }
     public static readonly BindableProperty StepProperty =
             BindableProperty.Create(nameof(Step), typeof(decimal), typeof(UpDown), Convert.ToDecimal(1), propertyChanged: OnStepChanged);
@@ -37,14 +47,14 @@ public partial class UpDown : ContentView
     {
         UpDown control = bindable as UpDown;
 
-        control.ValueLabel.Text = ((decimal)newValue).ToString(control.Culture);
+        control.ValueLabel.Text = ((decimal)newValue).ToString(control.Format, control.Culture);
     }
     public static readonly BindableProperty UpperLimitProperty =
         BindableProperty.Create(nameof(UpperLimit), typeof(decimal?), typeof(UpDown), null, propertyChanged: OnUpperLimitChanged);
     private static void OnUpperLimitChanged (BindableObject bindable, object oldValue, object newValue)
     {
         var control = bindable as UpDown;
-        decimal currentValue = Convert.ToDecimal(control.ValueLabel.Text, control.Culture);
+        decimal currentValue = decimal.Parse(control.ValueLabel.Text, NumberStyles.Any, control.Culture);
 
         if (currentValue > (decimal)newValue)
             throw new Exception("Cannot enforce an upper limit when the current value has already exceeded it.");
@@ -54,7 +64,7 @@ public partial class UpDown : ContentView
     private static void OnLowerLimitChanged (BindableObject bindable, object oldValue, object newValue)
     {
         var control = bindable as UpDown;
-        decimal currentValue = Convert.ToDecimal(control.ValueLabel.Text, control.Culture);
+        decimal currentValue = decimal.Parse(control.ValueLabel.Text, NumberStyles.Any, control.Culture);
 
         if (currentValue < (decimal)newValue)
             throw new Exception("Cannot enforce a lower limit when the current value has already exceeded it.");
@@ -177,6 +187,11 @@ public partial class UpDown : ContentView
         get => (CultureInfo)GetValue(CultureProperty);
         set => SetValue(CultureProperty, value);
     }
+    public string Format
+    {
+        get => (string)GetValue(FormatProperty);
+        set => SetValue(FormatProperty, value);
+    }
     public decimal Step
     {
         get => (decimal)GetValue(StepProperty);
@@ -250,7 +265,7 @@ public partial class UpDown : ContentView
         this.BackgroundColor = Colors.Transparent;
         
         if(string.IsNullOrEmpty(ValueLabel.Text))
-            ValueLabel.Text = ((decimal)0).ToString(Culture);
+            ValueLabel.Text = ((decimal)0).ToString(Format, Culture);
     }
 
     #region Events
@@ -258,7 +273,7 @@ public partial class UpDown : ContentView
     {
         try
         {
-            decimal currentValue = Decimal.Parse(this.ValueLabel.Text, Culture);
+            decimal currentValue = decimal.Parse(this.ValueLabel.Text, NumberStyles.Any, Culture);
 
             currentValue -= this.Step;
 
@@ -268,7 +283,7 @@ public partial class UpDown : ContentView
                 return;
             }
 
-            this.ValueLabel.Text = currentValue.ToString(Culture);
+            this.ValueLabel.Text = currentValue.ToString(Format, Culture);
             
             this.ValueChanged?.Invoke(this, new ValueChangedArgs(currentValue));
         }
@@ -281,7 +296,7 @@ public partial class UpDown : ContentView
     {
         try
         {
-            decimal currentValue = Decimal.Parse(this.ValueLabel.Text, Culture);
+            decimal currentValue = decimal.Parse(this.ValueLabel.Text, NumberStyles.Any, Culture);
 
             currentValue += this.Step;
             
@@ -291,7 +306,7 @@ public partial class UpDown : ContentView
                 return;
             }
 
-            this.ValueLabel.Text = currentValue.ToString(Culture);
+            this.ValueLabel.Text = currentValue.ToString(Format, Culture);
             
             this.ValueChanged?.Invoke(this, new ValueChangedArgs(currentValue));
         }
