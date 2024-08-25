@@ -270,7 +270,7 @@ public partial class UpDown : ContentView
 
             this.ValueLabel.Text = currentValue.ToString(Culture);
             
-            this.ValueChanged?.Invoke(this, new ValueChangedArgs(currentValue.ToString(Culture)));
+            this.ValueChanged?.Invoke(this, new ValueChangedArgs(currentValue));
         }
         catch (Exception exception)
         {
@@ -293,7 +293,7 @@ public partial class UpDown : ContentView
 
             this.ValueLabel.Text = currentValue.ToString(Culture);
             
-            this.ValueChanged?.Invoke(this, new ValueChangedArgs(currentValue.ToString(Culture)));
+            this.ValueChanged?.Invoke(this, new ValueChangedArgs(currentValue));
         }
         catch (Exception exception)
         {

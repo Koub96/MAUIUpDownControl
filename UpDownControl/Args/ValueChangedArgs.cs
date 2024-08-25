@@ -2,9 +2,9 @@ namespace UpDownControl.Args;
 
 public class ValueChangedArgs : EventArgs
 {
-    public string Value { get; private set; }
+    public decimal Value { get; private set; }
 
-    public ValueChangedArgs(string value)
+    public ValueChangedArgs(decimal value)
     {
         this.Value = value;
     }
