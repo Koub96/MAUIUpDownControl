@@ -3,6 +3,12 @@
 
 `MauiUpDownControl` provides the ability to include an up and down numeric control in your .NET MAUI application.
 
+`v1.2.0`
+
+v1.2.0 now supports formatting for the displayed numeric value via the Format property.
+
+# Breaking Change: From v1.2.0 and on, the ValueChanged event will return the changed value as a decimal.
+
 ## Install Plugin
 
 Available on [NuGet](https://www.nuget.org/packages/UpDownControl/).
